@@ -16,7 +16,6 @@ def go_next(actual_letter, next_pos, direction, distance):
         navigate(next_pos, distance + 1, heightmap, direction)
 
 def navigate(pos, distance, heightmap, direction):
-    global map_dimensions
     global min_distance
     try:
         actual_letter = heightmap[pos[0]][pos[1]][0]
