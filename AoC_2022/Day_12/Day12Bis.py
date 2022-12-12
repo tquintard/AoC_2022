@@ -37,7 +37,7 @@ def navigate(pos, distance, heightmap, direction):
         pass
 
 start = time.perf_counter()
-with open(r'AoC_2022\Day_12\example.txt', "r") as f:
+with open(r'AoC_2022\Day_12\Day12.txt', "r") as f:
     inputs = f.read().splitlines()
     map_dimensions= (len(inputs), len(inputs[0]))
     max_distance = map_dimensions[0] * map_dimensions[1] - 1
