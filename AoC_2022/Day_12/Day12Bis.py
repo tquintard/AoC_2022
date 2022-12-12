@@ -16,16 +16,20 @@ def go_next(actual_letter, next_pos, direction, distance):
         navigate(next_pos, distance + 1, heightmap, direction)
 
 def navigate(pos, distance, heightmap, direction):
+    global map_dimensions
     global min_distance
     try:
         actual_letter = heightmap[pos[0]][pos[1]][0]
         if heightmap[pos[0]][pos[1]][1] > distance: #already visited but from a longer path
             heightmap[pos[0]][pos[1]][1] = distance
-            if pos[1] in range(1,len(heightmap[0]) - 1) and pos[0] in range(1,len(heightmap) - 1):
-                go_next(actual_letter, [pos[0], pos[1] + 1], direction, distance) # look to the right
-                go_next(actual_letter, [pos[0], pos[1] - 1], direction, distance) # look to the left
-                go_next(actual_letter, [pos[0] + 1, pos[1]], direction, distance) # look down
-                go_next(actual_letter, [pos[0] - 1, pos[1]], direction, distance) # look up
+            if pos[1] < map_dimensions[1] - 1: #looking on the right
+                go_next(actual_letter, [pos[0], pos[1] + 1], direction, distance)
+            if pos[0] < map_dimensions[0] - 1: #looking down
+                go_next(actual_letter, [pos[0] + 1, pos[1]], direction, distance)
+            if pos[1] > 0: #looking left
+                go_next(actual_letter, [pos[0], pos[1] - 1], direction, distance)
+            if pos[0] > 0: #looking up
+                go_next(actual_letter, [pos[0] - 1, pos[1]], direction, distance)
             #update min_distance if required
             if actual_letter == 'a' and heightmap[pos[0]][pos[1]][1] < min_distance:
                 min_distance = heightmap[pos[0]][pos[1]][1]
@@ -33,9 +37,10 @@ def navigate(pos, distance, heightmap, direction):
         pass
 
 start = time.perf_counter()
-with open(r'AoC_2022\Day_12\Day12.txt', "r") as f:
+with open(r'AoC_2022\Day_12\example.txt', "r") as f:
     inputs = f.read().splitlines()
-    max_distance = len(inputs) * len(inputs[0]) - 1
+    map_dimensions= (len(inputs), len(inputs[0]))
+    max_distance = map_dimensions[0] * map_dimensions[1] - 1
     heightmap = [[[char, max_distance] for char in line ]for line in inputs]
     start_pos = find_start_end(heightmap,'S')
     end_pos = find_start_end(heightmap, 'E')
