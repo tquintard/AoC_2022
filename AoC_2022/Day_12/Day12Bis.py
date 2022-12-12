@@ -22,14 +22,11 @@ def navigate(pos, distance, heightmap, direction):
         actual_letter = heightmap[pos[0]][pos[1]][0]
         if heightmap[pos[0]][pos[1]][1] > distance: #already visited but from a longer path
             heightmap[pos[0]][pos[1]][1] = distance
-            #looking on the right and left
-            if pos[1] in range(1,len(heightmap[0]) - 1):
-                go_next(actual_letter, [pos[0], pos[1] + 1], direction, distance)
-                go_next(actual_letter, [pos[0], pos[1] - 1], direction, distance)
-            #looking down and up
-            if pos[0] in range(1,len(heightmap) - 1):
-                go_next(actual_letter, [pos[0] + 1, pos[1]], direction, distance)
-                go_next(actual_letter, [pos[0] - 1, pos[1]], direction, distance)        
+            if pos[1] in range(1,len(heightmap[0]) - 1) and pos[0] in range(1,len(heightmap) - 1):
+                go_next(actual_letter, [pos[0], pos[1] + 1], direction, distance) # look to the right
+                go_next(actual_letter, [pos[0], pos[1] - 1], direction, distance) # look to the left
+                go_next(actual_letter, [pos[0] + 1, pos[1]], direction, distance) # look down
+                go_next(actual_letter, [pos[0] - 1, pos[1]], direction, distance) # look up
             #update min_distance if required
             if actual_letter == 'a' and heightmap[pos[0]][pos[1]][1] < min_distance:
                 min_distance = heightmap[pos[0]][pos[1]][1]
