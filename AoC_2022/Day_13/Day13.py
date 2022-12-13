@@ -33,9 +33,8 @@ with open(r'AoC_2022\Day_13\Day13.txt', "r") as f:
     signals = [eval(signal) for signal in f.read().splitlines() if signal != '']
     #Part 1
     sum_indices = 0
-    for idx, signal in enumerate(signals):
-        if idx % 2 == 0: 
-            sum_indices += idx // 2 + 1 if is_in_right_order([signals[idx], signals[idx + 1]]) else 0
+    for idx in range(0, len(signals), 2):
+        sum_indices += idx // 2 + 1 if is_in_right_order([signals[idx], signals[idx + 1]]) else 0
 
     print(sum_indices)
     
