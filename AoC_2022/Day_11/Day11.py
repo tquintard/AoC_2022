@@ -20,7 +20,7 @@ def set_monkeys(inputs):
         mod *= monkey[2]
     return monkeys
 
-with open(r'AoC_2022\Day_11\Day11.txt', "r") as f:
+with open(r'AoC_2022\Day_11\Day11Bis.txt', "r") as f:
     monkeys_info = [monkey.splitlines()[1:] for monkey in f.read().split('\n\n')]  
     for part in range(2):
         monkeys = set_monkeys(monkeys_info)

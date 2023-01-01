@@ -1,3 +1,4 @@
+import time
 def is_in_right_order(pair):
     min_item = min(map(len,pair))
     for i, item in enumerate(pair[0][:min_item]): #look on the left signal
@@ -29,6 +30,7 @@ def is_in_right_order(pair):
     elif len(pair[0])>len(pair[1]):
         return False
 
+start = time.perf_counter()
 with open(r'AoC_2022\Day_13\Day13.txt', "r") as f:
     signals = [eval(signal) for signal in f.read().splitlines() if signal != '']
     #Part 1
@@ -48,4 +50,4 @@ with open(r'AoC_2022\Day_13\Day13.txt', "r") as f:
                 signals[idx] = temp_signal
 
     print((signals.index([[6]]) + 1) * (signals.index([[2]]) + 1))
-    
+    print(time.perf_counter() - start)

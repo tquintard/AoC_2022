@@ -38,7 +38,7 @@ def row_not_full(line_target):
     return True
 
 start = time.perf_counter()
-with open(r'AoC_2022\Day_15\Day15.txt', "r") as f:
+with open(r'Day15.txt', "r") as f:
     inputs = f.read().splitlines()
     pattern = re.compile(r"(-?\d+)")
     sensors_mapping = [tuple([int(match.group(1)) for match in pattern.finditer(line)][:2]) for line in inputs]

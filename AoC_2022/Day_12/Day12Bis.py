@@ -1,4 +1,5 @@
 import time
+import sys
 
 def find_start_end(heightmap, letter):
     for row, line in enumerate(heightmap):
@@ -14,14 +15,15 @@ def go_next(actual_letter, next_pos, distance):
     next_letter = heightmap[next_pos[0]][next_pos[1]][0]
     if ord(actual_letter) - ord(next_letter) <= 1:
         navigate(next_pos, distance + 1, heightmap)
+            #print(distance)
 
 def navigate(pos, distance, heightmap):
     global map_dimensions
     global min_distance
-    try:
-        actual_letter = heightmap[pos[0]][pos[1]][0]
-        if heightmap[pos[0]][pos[1]][1] > distance: #already visited but from a longer path
-            heightmap[pos[0]][pos[1]][1] = distance
+    actual_letter = heightmap[pos[0]][pos[1]][0]
+    if heightmap[pos[0]][pos[1]][1] > distance: #already visited but from a longer path
+        heightmap[pos[0]][pos[1]][1] = distance
+        try:
             if pos[1] < map_dimensions[1] - 1: #looking on the right
                 go_next(actual_letter, [pos[0], pos[1] + 1], distance)
             if pos[0] < map_dimensions[0] - 1: #looking down
@@ -32,8 +34,11 @@ def navigate(pos, distance, heightmap):
                 go_next(actual_letter, [pos[0] - 1, pos[1]], distance)
             if actual_letter == 'a' and heightmap[pos[0]][pos[1]][1] < min_distance: #update min_distance if required
                 min_distance = heightmap[pos[0]][pos[1]][1]
-    except RecursionError:
-        pass
+                sys.setrecursionlimit(min_distance + 1)
+        except RecursionError:
+            pass
+            
+            
 
 start = time.perf_counter()
 with open(r'AoC_2022\Day_12\Day12.txt', "r") as f:
@@ -44,6 +49,7 @@ with open(r'AoC_2022\Day_12\Day12.txt', "r") as f:
     start_pos = find_start_end(heightmap,'S')
     end_pos = find_start_end(heightmap, 'E')
     min_distance = max_distance
+    sys.setrecursionlimit(1000)
     navigate(end_pos, 0, heightmap)
     print([heightmap[start_pos[0]][start_pos[1]][1], min_distance])
     print(time.perf_counter() - start)
