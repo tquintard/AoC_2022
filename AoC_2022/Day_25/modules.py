@@ -12,10 +12,5 @@ def b10_to_SNAFU(nb_b10):
     remainder = 0
     for i, digit in enumerate(nb_b5):
         nb_b5[i] = B10[(digit + remainder) % len(B10)]
-        if digit in [3, 4]:
-            remainder = 1
-        else:
-            remainder = 0
-    if remainder == 1:
-        nb_b5.append('1')
-    return ''.join(nb_b5[::-1])
+        remainder = 1 if digit in [3, 4] else 0
+    return ''.join(nb_b5[::-1]) if remainder == 0 else '1' + ''.join(nb_b5[::-1])
